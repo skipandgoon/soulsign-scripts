@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         猪猪 piggo.me
+// @name         piggo（猪猪）
 // @namespace    https://soulsign.inu1255.cn?account=checkin
 // @version      1.0.5
 // @author       墨墨
