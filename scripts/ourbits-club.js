@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name         我堡 Ourbits
-// @namespace    https://soulsign.inu1255.cn?account=checkin
-// @version      1.4.1
-// @author       墨墨
-// @loginURL     https://ourbits.club/
-// @expire       900000
-// @domain       ourbits.club
+// @name Ourbits（我堡）
+// @namespace https://soulsign.inu1255.cn?account=baiwei666
+// @version 1.2.1
+// @author baiwei666
+// @loginURL https://ourbits.club/
+// @expire 14400000
+// @domain ourbits.club
 // ==/UserScript==
 //
 // 我堡（NexusPHP）签到要点：
@@ -50,7 +50,6 @@ exports.run = async function (param) {
   // 不再用首页 fetch 预判：用户栏那个标记不可靠，宁可多开这一个页面
   return await open(ATT, false, async (fb) => {
     let cfSeen = false;
-    let tokenAt = -1;          // 第一次看到 Turnstile 令牌的轮次
     for (let i = 0; i < 90; i++) {
       await fb.sleep(1000);
       const s = await probe(fb);
@@ -59,27 +58,18 @@ exports.run = async function (param) {
 
       // 过盾判定：整页挑战 / 盾 iframe 在 / 令牌控件存在但为空 → 继续等，绝不判结果
       const cfText = /Just a moment|cf-challenge|请稍候|Checking your browser|Performing security|人机验证/.test(s.txt);
-      if (cfText || s.cfIframe || s.tokenLen === 0) { cfSeen = true; continue; }
+      const pending = cfText || s.cfIframe || s.tokenLen === 0;
+      if (pending) { cfSeen = true; continue; }
+      if (s.tokenLen > 0) { cfSeen = true; continue; }   // 令牌刚到手，等表单自动提交完
 
-      // 令牌到手：给它 3 秒让表单自动提交（只等这一次，不能无限等）
-      if (s.tokenLen > 0) {
-        cfSeen = true;
-        if (tokenAt < 0) { tokenAt = i; continue; }
-        if (i - tokenAt < 3) continue;
-      }
-
-      // 判结果（从强到弱）
+      // 盾已过 → 判结果（严格：已签看明确文案；成功要求「签到入口消失」）
       if (/您今天已经签到过了|今天已经签到|请勿重复刷新/.test(s.txt)) return '今日已签到' + fmt(s.txt);
 
       const succ = /签到成功|签到完成|获得\s*[\d.,]+\s*(?:魔力|克|点)/.test(s.txt);
-      if (succ) return '签到成功' + fmt(s.txt);
-
-      // 弱标记（用户栏「签到已得N」）必须搭配「签到入口消失」才认
       const reward = /签到已得\s*[\d,.]+/.test(s.txt);
-      if (reward && !s.hasForm) return '签到成功' + fmt(s.txt);
+      if (!s.hasForm && (succ || reward)) return '签到成功' + fmt(s.txt);
 
-      // 盾过了、令牌也早有了，页面既不显示结果、入口也还在 → 说明表单没提交成功
-      if (tokenAt >= 0 && i - tokenAt > 20) throw '签到失败：人机验证令牌已就绪但表单未提交（页面可能改版）';
+      if (!s.hasForm && !succ && !reward && i > 30) throw '签到失败：页面既无签到入口也无已签提示（可能改版）';
     }
     throw '签到失败：等不到签到结果' + (cfSeen ? '（人机验证未通过）' : '（页面改版？）');
   });

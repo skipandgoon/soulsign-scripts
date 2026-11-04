@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name 网易云音乐
 // @namespace https://soulsign.inu1255.cn?account=keeper-lf
-// @version 1.0.7
+// @version 1.0.5
 // @author keeper-lf
 // @loginURL https://music.163.com/#/login
+// @updateURL https://soulsign.inu1255.cn/script/keeper-lf/网易云音乐
 // @expire 900000
 // @domain music.163.com
 // ==/UserScript==
-//
 // 本版两处改动（病根同一个）：
 //   ① 魂签沙箱里 axios 返回的 data 是「原始字符串」（源码 js/offscreen.js: data: await response.text()），
 //      原脚本直接当对象用 → data.code 永远 undefined → throw data.msg → 抛出的也是 undefined
