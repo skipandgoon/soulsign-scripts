@@ -11,7 +11,8 @@
       "loginURL": "https://piggo.me/",
       "expire": 900000,
       "file": "scripts/piggo.soulsign.js",
-      "desc": "猪猪（SPA + Cloudflare Turnstile）签到；登录后进 /calendar 点签到"
+      "desc": "猪猪（SPA + Cloudflare Turnstile）签到；登录后进 /calendar 点签到",
+      "updated": "2026-11-04"
     },
     {
       "id": "ourbits-club",
@@ -22,7 +23,8 @@
       "loginURL": "https://ourbits.club/",
       "expire": 900000,
       "file": "scripts/ourbits.soulsign.js",
-      "desc": "我堡（NexusPHP）签到；过 CF 后进签到页，判据只认签到页文案"
+      "desc": "我堡（NexusPHP）签到；过 CF 后进签到页，判据只认签到页文案",
+      "updated": "2026-11-04"
     },
     {
       "id": "music-163-com",
@@ -33,7 +35,8 @@
       "loginURL": "https://music.163.com/#/login",
       "expire": 900000,
       "file": "scripts/netease.soulsign.js",
-      "desc": "网易云音乐每日签到（手机端 + 电脑端两个任务）"
+      "desc": "网易云音乐每日签到（手机端 + 电脑端两个任务）",
+      "updated": "2026-11-04"
     }
   ]
 }
