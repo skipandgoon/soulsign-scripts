@@ -33,4 +33,3 @@ sync/sync.json    云端同步快照（含脚本参数，仅私有仓库可放�
 ## 红线
 
 - 脚本里**不许出现** cookie、密码、2FA 密钥、推送 token；参数一律走魂签的「参数」配置（存在 `_params` 里，只进 `sync/sync.json`）
-- 仓库保持 **private**
