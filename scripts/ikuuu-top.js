@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ikuuu（iKuuu VPN）
 // @namespace    https://soulsign.inu1255.cn?account=checkin
-// @version      1.0.0
+// @version      1.0.1
 // @author       墨墨
 // @loginURL     https://ikuuu.top/
 // @expire       900000
@@ -24,9 +24,16 @@ function txtOf(t) {
   return String(t || '').replace(/\s+/g, ' ');
 }
 
-function looksLogin(t) {
-  const s = txtOf(t);
-  return /登录|登 录|密码|邮箱/.test(s) && !/签到成功|已签到/.test(s);
+// 只认「登录页」的两个硬信号：URL 带 login，或页面上真有密码输入框。
+// 不能用文字判断——登录后的页面也会有「退出登录」字样，会误判。
+async function hasPasswordField(fb) {
+  try {
+    return await fb.eval(() =>
+      !!document.querySelector('input[type=password], input[name=password], input[name=passwd]')
+    );
+  } catch (e) {
+    return false;
+  }
 }
 
 async function bodyOf(fb) {
@@ -91,7 +98,7 @@ exports.run = async function () {
           const url = await urlOf(fb);
           const t = txtOf(await bodyOf(fb));
 
-          if (/\/auth\/login|\/login/.test(url) || looksLogin(t)) {
+          if (/\/auth\/login|\/login/.test(url) || (await hasPasswordField(fb))) {
             throw '未登录：iKuuu 需要「账号密码 + 点选验证」，请在浏览器里手动登录一次（登完保持登录即可，不用复制 cookie）';
           }
 
