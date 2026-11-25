@@ -378,12 +378,12 @@
       "id": "ikuuu-top",
       "name": "iKuuu VPN",
       "author": "墨墨",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "domain": "ikuuu.top",
       "loginURL": "https://ikuuu.top/",
       "expire": 900000,
       "file": "scripts/ikuuu-top.js",
-      "desc": "iKuuu 每日签到（浏览器登录态，无需青龙 COOKIE）",
+      "desc": "iKuuu 每日签到（接口判定，浏览器登录态，无需青龙 COOKIE）",
       "updated": "2026-11-25"
     }
   ]
