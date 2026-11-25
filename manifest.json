@@ -376,14 +376,14 @@
     },
     {
       "id": "ikuuu-top",
-      "name": "iKuuu VPN",
+      "name": "ikuuu（iKuuu VPN）",
       "author": "墨墨",
-      "version": "1.0.2",
+      "version": "1.1.0",
       "domain": "ikuuu.top",
       "loginURL": "https://ikuuu.top/",
       "expire": 900000,
       "file": "scripts/ikuuu-top.js",
-      "desc": "iKuuu 每日签到（接口判定，浏览器登录态，无需青龙 COOKIE）",
+      "desc": "iKuuu 每日签到：支持账号/密码参数自动登录（点选验证需人工），接口判定结果",
       "updated": "2026-11-25"
     }
   ]
